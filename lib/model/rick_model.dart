@@ -1,4 +1,46 @@
 class RickModel {
+  final Info info;
+  final List<Character> results;
+
+  RickModel({
+    required this.info,
+    required this.results,
+  });
+
+  factory RickModel.fromJson(Map<String, dynamic> json) {
+    return RickModel(
+      info: Info.fromJson(json['info']),
+      results: (json['results'] as List)
+          .map((item) => Character.fromJson(item))
+          .toList(),
+    );
+  }
+}
+
+class Info {
+  final int count;
+  final int pages;
+  final String? next;
+  final String? prev;
+
+  Info({
+    required this.count,
+    required this.pages,
+    this.next,
+    this.prev,
+  });
+
+  factory Info.fromJson(Map<String, dynamic> json) {
+    return Info(
+      count: json['count'],
+      pages: json['pages'],
+      next: json['next'],
+      prev: json['prev'],
+    );
+  }
+}
+
+class Character {
   final int id;
   final String name;
   final String status;
@@ -12,33 +54,63 @@ class RickModel {
   final String url;
   final String created;
 
-  RickModel({required this.created, required this.episode, required this.gender, required this.id, required this.image, required this.location, required this.name, required this.origin, required this.species, required this.status, required this.type, required this.url});
+  Character({
+    required this.id,
+    required this.name,
+    required this.status,
+    required this.species,
+    required this.type,
+    required this.gender,
+    required this.origin,
+    required this.location,
+    required this.image,
+    required this.episode,
+    required this.url,
+    required this.created,
+  });
 
-  factory RickModel.fromJson(Map<String, dynamic> json){
-    return RickModel(created: json['created'], episode: json['episode'], gender: json['gender'], id: json['id'], image: json['image'], location: json['location'], name: json['name'], origin: json['origin'], species: json['species'], status: json['status'], type: json['type'], url: json['url']);
+  factory Character.fromJson(Map<String, dynamic> json) {
+    return Character(
+      id: json['id'],
+      name: json['name'],
+      status: json['status'],
+      species: json['species'],
+      type: json['type'],
+      gender: json['gender'],
+      origin: Origin.fromJson(json['origin']),
+      location: Location.fromJson(json['location']),
+      image: json['image'],
+      episode: List<String>.from(json['episode']),
+      url: json['url'],
+      created: json['created'],
+    );
   }
-
 }
 
-
-class Origin{
+class Origin {
   final String name;
   final String url;
 
   Origin({required this.name, required this.url});
 
-  factory Origin.fromJson(Map<String, dynamic> json){
-    return Origin(name: json['name'], url: json['url']);
+  factory Origin.fromJson(Map<String, dynamic> json) {
+    return Origin(
+      name: json['name'],
+      url: json['url'],
+    );
   }
 }
 
-class Location{
+class Location {
   final String name;
   final String url;
 
   Location({required this.name, required this.url});
 
-  factory Location.fromJson(Map<String, dynamic> json){
-    return Location(name: json['name'], url: json['url']);
+  factory Location.fromJson(Map<String, dynamic> json) {
+    return Location(
+      name: json['name'],
+      url: json['url'],
+    );
   }
 }
